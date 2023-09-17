@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "description": [
+      "This file contains Legacy Node.js error codes#",
+      "automatically generated from following \"https://nodejs.org/dist/latest-v20.x/docs/api/errors.html\"",
+      "Do not edit it by hand."
+    ]
+  },
+  "data": {
+    "ERR_CANNOT_TRANSFER_OBJECT": "The value passed to postMessage() contained an object that is not supported for transferring.",
+    "ERR_CRYPTO_HASH_DIGEST_NO_UTF1": "The UTF-16 encoding was used with hash.digest(). While the hash.digest() method does allow an encoding argument to be passed in, causing the method to return a string rather than a Buffer, the UTF-16 encoding (e.g. ucs or utf16le) is not supported.",
+    "ERR_HTTP_FRAME_ERROR": "Used when a failure occurs sending an individual frame on the HTTP/2 session.",
+    "ERR_HTTP_HEADERS_OBJECT": "Used when an HTTP/2 Headers Object is expected.",
+    "ERR_HTTP_HEADER_REQUIRED": "Used when a required header is missing in an HTTP/2 message.",
+    "ERR_HTTP_INFO_HEADERS_AFTER_RESPOND": "HTTP/2 informational headers must only be sent prior to calling the Http2Stream.prototype.respond() method.",
+    "ERR_HTTP_STREAM_CLOSED": "Used when an action has been performed on an HTTP/2 Stream that has already been closed.",
+    "ERR_HTTP_INVALID_CHAR": "Used when an invalid character is found in an HTTP response status message (reason phrase).",
+    "ERR_INDEX_OUT_OF_RANGE": "A given index was out of the accepted range (e.g. negative offsets).",
+    "ERR_INVALID_OPT_VALUE": "An invalid or unexpected value was passed in an options object.",
+    "ERR_INVALID_OPT_VALUE_ENCODING": "An invalid or unknown file encoding was passed.",
+    "ERR_MISSING_MESSAGE_PORT_IN_TRANSFER_LIST": "This error code was replaced by ERR_MISSING_TRANSFERABLE_IN_TRANSFER_LIST in Node.js v15.0.0, because it is no longer accurate as other types of transferable objects also exist now.",
+    "ERR_NAPI_CONS_PROTOTYPE_OBJECT": "Used by the Node-API when Constructor.prototype is not an object.",
+    "ERR_NETWORK_IMPORT_BAD_RESPONSE": "Response was received but was invalid when importing a module over the network.",
+    "ERR_NETWORK_IMPORT_DISALLOWED": "A network module attempted to load another module that it is not allowed to load. Likely this restriction is for security reasons.",
+    "ERR_NO_LONGER_SUPPORTED": "A Node.js API was called in an unsupported manner, such as Buffer.write(string, encoding, offset[, length]).",
+    "ERR_OPERATION_FAILED": "An operation failed. This is typically used to signal the general failure of an asynchronous operation.",
+    "ERR_OUTOFMEMORY": "Used generically to identify that an operation caused an out of memory condition.",
+    "ERR_PARSE_HISTORY_DATA": "The node:repl module was unable to parse data from the REPL history file.",
+    "ERR_SOCKET_CANNOT_SEND": "Data could not be sent on a socket.",
+    "ERR_STDERR_CLOSE": "An attempt was made to close the process.stderr stream. By design, Node.js does not allow stdout or stderr streams to be closed by user code.",
+    "ERR_STDOUT_CLOSE": "An attempt was made to close the process.stdout stream. By design, Node.js does not allow stdout or stderr streams to be closed by user code.",
+    "ERR_STREAM_READ_NOT_IMPLEMENTED": "Used when an attempt is made to use a readable stream that has not implemented readable._read().",
+    "ERR_TLS_RENEGOTIATION_FAILED": "Used when a TLS renegotiation request has failed in a non-specific way.",
+    "ERR_TRANSFERRING_EXTERNALIZED_SHAREDARRAYBUFFER": "A SharedArrayBuffer whose memory is not managed by the JavaScript engine or by Node.js was encountered during serialization. Such a SharedArrayBuffer cannot be serialized.This can only happen when native addons create SharedArrayBuffers in \"externalized\" mode, or put existing SharedArrayBuffer into externalized mode.",
+    "ERR_UNKNOWN_STDIN_TYPE": "An attempt was made to launch a Node.js process with an unknown stdin file type. This error is usually an indication of a bug within Node.js itself, although it is possible for user code to trigger it.",
+    "ERR_UNKNOWN_STREAM_TYPE": "An attempt was made to launch a Node.js process with an unknown stdout or stderr file type. This error is usually an indication of a bug within Node.js itself, although it is possible for user code to trigger it.",
+    "ERR_VBREAKITERATOR": "The V8 BreakIterator API was used but the full ICU data set is not installed.",
+    "ERR_VALUE_OUT_OF_RANGE": "Used when a given value is out of the accepted range.",
+    "ERR_VM_MODULE_NOT_LINKED": "The module must be successfully linked before instantiation.",
+    "ERR_VM_MODULE_LINKING_ERRORED": "The linker function returned a module for which linking has failed.",
+    "ERR_WORKER_UNSUPPORTED_EXTENSION": "The pathname used for the main script of a worker has an unknown file extension.",
+    "ERR_ZLIB_BINDING_CLOSED": "Used when an attempt is made to use a zlib object after it has already been closed.",
+    "ERR_CPU_USAGE": "The native call from process.cpuUsage could not be processed."
+  }
+}
