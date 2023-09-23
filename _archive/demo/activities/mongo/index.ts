@@ -1,101 +1,38 @@
-import * as path from 'path';
-//
-import {BasicActivity} from '../basic/';
-import {ActivityDefinition, GenericActivity} from '../generic/';
-import {Cmd, Spawn} from '../../helpers/spawn';
-//
+import * as path from "path";
+import {ActionMethodState, Actions} from "../../../../src/lib/runner";
+import {Activity, ActivityActionsDefinition} from "../../../../src/lib/config";
 
-const MONGO_ACTIONS: ActivityDefinition = {
-  _backup:  [
+const MONGO_ACTIONS: ActivityActionsDefinition = {
+  default: [ '$print', `Please run one of $backup|$restore actions` ],
+  $backup: [ '$series',
     [ "$print", "Backing up database..." ],
-    [ "$exec", "mongodump --host ${host} --port ${port}  --out \"${dir}\"" ],
+    [ "_calcBackupDir" ],
+    [ "$print", "mongodump --host ${host} --port ${port}  --out \"${dir}\"" ],
     [ "$print", "Done." ],
   ],
-  _restore: [
+  $restore: [ '$series',
     [ "$print", "Restoring database..." ],
-    [ "$exec", "mongorestore --host ${host} --port ${port}  --dir \"${dir}\" ${ drop ? \"--drop\" : \"\"}" ],
+    [ "_calcBackupDir"],
+    [ "$print", "mongorestore --host ${host} --port ${port}  --dir \"${dir}\" ${ drop_on_restore ? \"--drop\" : \"\"}" ],
     [ "$print", "Done." ],
   ],
+  async _calcBackupDir(action, parameters,
+    {id, level, scopes, activity, runner, logger}: ActionMethodState
+  ) {
+    const nowStr = (new Date()).toISOString();
+    const baseDir = String( scopes.get('baseDir') );
+    const dir = path.join(baseDir, nowStr);
+    // return dir;
+    scopes.current().set('dir', dir);
+  }
 };
 
-
-interface MongoUtilsOptions {
-  baseDir: string
-  host: string
-  port: string
-  drop_on_restore: boolean
+export const activity: Activity = {
+  base_dir: './demo',
+  version: '2.5.22',
+  actions: {
+    ...MONGO_ACTIONS,
+  }
 }
 
-class MongoActivity extends GenericActivity {
-  options: MongoUtilsOptions
-  spawn: Cmd
-  basicActivity: BasicActivity
-
-  constructor(options: MongoUtilsOptions) {
-    super();
-    this.options = options;
-    this.spawn = Spawn();
-    this.basicActivity = new BasicActivity(MONGO_ACTIONS);
-    this.basicActivity.addMethods(this);
-  }
-
-  _getBackupDir() {
-    const nowStr = (new Date()).toISOString();
-    const dir = path.join(this.options.baseDir, nowStr);
-    return dir;
-  }
-
-  // /**
-  //  *
-  //  * @param {String} host
-  //  * @param {Number} port
-  //  * @param {String} dir
-  //  * @returns {Promise<String>}
-  //  * @private
-  //  */
-  //async _backup({ host, port, dir }) {
-  //  const cmd = `mongodump --host ${host} --port ${port}  --out "${dir}"`;
-  //  return await this.spawn._spawnExecutePromised(cmd);
-  //}
-
-  async backup() {
-    const dir = this._getBackupDir();
-    // const res = await this._backup({
-    const res = await this['_backup']({
-      host: this.options.host,
-      port: this.options.port,
-      dir,
-    });
-    return dir;
-  }
-
-
-  // /**
-  //  *
-  //  * @param {String} host
-  //  * @param {Number} port
-  //  * @param {String} dir
-  //  * @param {Boolean} drop
-  //  * @returns {Promise<String>}
-  //  * @private
-  //  */
-  //async _restore({ host, port, dir, drop }) {
-  //  const dropOption = drop ? '--drop' : '';
-  //  const cmd = `mongorestore --host ${host} --port ${port}  --dir "${dir}" "${dropOption}"`;
-  //  return await this.spawn._spawnExecutePromised(cmd);
-  //}
-
-  async restore(dir: string) {
-    // const result = await this._restore({
-    const result = await this['_restore']({
-      host: this.options.host,
-      port: this.options.port,
-      dir,
-      drop: this.options.drop_on_restore,// ? '--drop' : '',
-    })
-  }
-
-}
-
-
-module.exports = MongoActivity;
+export default activity;

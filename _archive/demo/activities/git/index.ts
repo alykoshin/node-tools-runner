@@ -1,16 +1,15 @@
 import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
-const gitconfig = require('git-config');
 import {Octokit} from 'octokit';
 import {RequestError} from "@octokit/request-error";
-const _ = require('lodash');
+import * as _ from 'lodash';
+import gitconfig from 'git-config';
 
-import {Actions} from "../../../../src/lib/runner";
-import {FullConfig, FullConfigActions} from "../../../../src/lib/config";
+import {Activity, ActivityActionsDefinition} from "../../../../src/lib/config";
 
 
-const GIT_ACTIONS: FullConfigActions = {
+const GIT_ACTIONS: ActivityActionsDefinition = {
   default: [
     'queryClean'
   ],
@@ -267,11 +266,9 @@ class GitActivity /*extends GenericActivity */ {
     //});
   }
 
-
 }
 
-
-export const activity: FullConfig = {
+export const activity: Activity = {
   base_dir: './demo',
   version: '2.5.22',
   actions: {
