@@ -230,7 +230,7 @@ const TEST_ACTIONS: ActivityActionsDefinition
   // },
   // _testAction4: [ 'echo', ">>> test4" ],
   //
-  // npmVersion: [ "$exec", "npm --version" ],
+  // npmVersion: [ "shell-command", "npm --version" ],
   //
   //printResult: ({ action, context, result }) => { console.log(result); return result; },
   //setA:({ action, context, result }) => { context['A']=result; return result; },

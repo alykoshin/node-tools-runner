@@ -14,21 +14,21 @@ const GIT_ACTIONS: ActivityActionsDefinition = {
     'queryClean'
   ],
   // "readGithubUsername": [
-  //   "$exec", ""
+  //   "shell-command", ""
   // ],
   "queryClean": ['series',
     // "$quote", [
     ["$print", "Ensuring Git directory is clean..."],
-    ["$exec", "git status --untracked-files=no --porcelain"]
+    ["shell-command", "git status --untracked-files=no --porcelain"]
     // ]
   ],
-  "queryCommitHash": ["$exec", "git rev-parse --short HEAD"],
-  "queryBranch": ["$exec", "git rev-parse --abbrev-ref HEAD"],
-  "checkoutBranch": ["$exec", "git checkout \"${branch}\""],
-  "add": ["$exec", "git add \"${filename}\""],
-  "commit": ["$exec", "git commit -m \"${message}\""],
-  "tag": ["$exec", "git commit -m \"${message}\""],
-  "push": ["$exec", "git push --follow-tags"],
+  "queryCommitHash": ["shell-command", "git rev-parse --short HEAD"],
+  "queryBranch": ["shell-command", "git rev-parse --abbrev-ref HEAD"],
+  "checkoutBranch": ["shell-command", "git checkout \"${branch}\""],
+  "add": ["shell-command", "git add \"${filename}\""],
+  "commit": ["shell-command", "git commit -m \"${message}\""],
+  "tag": ["shell-command", "git commit -m \"${message}\""],
+  "push": ["shell-command", "git push --follow-tags"],
   "getInit":            "git init",
   "gitRemoteAdd":       "git remote add origin https://github.com/${username}/${repository}.git",
   "gitAddAll":          "git add --all",
@@ -36,7 +36,7 @@ const GIT_ACTIONS: ActivityActionsDefinition = {
   "gitPushSetUpstream": "git push --set-upstream origin master",
   testEcho: [
     //[
-    "$exec",
+    "shell-command",
     //[
     // "$quote"
     "echo test1",
@@ -45,14 +45,14 @@ const GIT_ACTIONS: ActivityActionsDefinition = {
   ],
 
   initAndPush: [
-    "$exec",
+    "shell-command",
     //[
     // "getInit",
     "git init",
-    // [ "$exec", "git init" ],
+    // [ "shell-command", "git init" ],
     //"gitRemoteAdd",
     "git remote add origin https://github.com/${username}/${repository}.git",
-    // [ "$exec", "git remote add origin https://github.com/${username}/${repository}.git" ],
+    // [ "shell-command", "git remote add origin https://github.com/${username}/${repository}.git" ],
     //"gitAddAll",
     //{ action: "gitAddAll", }
     "git add --all",
@@ -64,7 +64,7 @@ const GIT_ACTIONS: ActivityActionsDefinition = {
   ],
   //initAndPush: [
   //  [ "$print", "initializing git repository" ],
-  //  "$exec", [
+  //  "shell-command", [
   //    "git init",
   //    "git remote add origin https://github.com/${username}/${repository}.git",
   //    "git add --all",`
@@ -73,10 +73,10 @@ const GIT_ACTIONS: ActivityActionsDefinition = {
   //  ],
   //],
 
-  async ensureClean(action, parameters, {runner, fullConfig, level, logger}) {
+  async ensureClean(action, parameters, {evaluate, runner, level, logger}) {
     // const git_clean = await this.queryClean();
     // const git_clean = await this['queryClean']();
-    const git_clean = await runner.eval('queryClean', fullConfig, {level, logger});
+    const git_clean = await evaluate('queryClean');
 
     if (!git_clean) {
       console.log(`Git directory is clean`);
