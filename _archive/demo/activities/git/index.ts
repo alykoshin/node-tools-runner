@@ -18,7 +18,7 @@ const GIT_ACTIONS: ActivityActionsDefinition = {
   // ],
   "queryClean": ['series',
     // "$quote", [
-    ["$print", "Ensuring Git directory is clean..."],
+    ["print", "Ensuring Git directory is clean..."],
     ["shell-command", "git status --untracked-files=no --porcelain"]
     // ]
   ],

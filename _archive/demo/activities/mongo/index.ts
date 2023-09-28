@@ -3,18 +3,18 @@ import {ActionMethodState, Actions} from "../../../../src/lib/runner";
 import {Activity, ActivityActionsDefinition} from "../../../../src/lib/config";
 
 const MONGO_ACTIONS: ActivityActionsDefinition = {
-  default: [ '$print', `Please run one of $backup|$restore actions` ],
-  $backup: [ '$series',
-    [ "$print", "Backing up database..." ],
+  default: [ 'print', `Please run one of $backup|$restore actions` ],
+  $backup: [ 'list',
+    [ "print", "Backing up database..." ],
     [ "_calcBackupDir" ],
-    [ "$print", "mongodump --host ${host} --port ${port}  --out \"${dir}\"" ],
-    [ "$print", "Done." ],
+    [ "print", "mongodump --host ${host} --port ${port}  --out \"${dir}\"" ],
+    [ "print", "Done." ],
   ],
-  $restore: [ '$series',
-    [ "$print", "Restoring database..." ],
+  $restore: [ 'list',
+    [ "print", "Restoring database..." ],
     [ "_calcBackupDir"],
-    [ "$print", "mongorestore --host ${host} --port ${port}  --dir \"${dir}\" ${ drop_on_restore ? \"--drop\" : \"\"}" ],
-    [ "$print", "Done." ],
+    [ "print", "mongorestore --host ${host} --port ${port}  --dir \"${dir}\" ${ drop_on_restore ? \"--drop\" : \"\"}" ],
+    [ "print", "Done." ],
   ],
   async _calcBackupDir(action, parameters,
     {id, level, scopes, activity, runner, logger}: ActionMethodState
