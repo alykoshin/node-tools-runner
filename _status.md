@@ -1,15 +1,14 @@
 <!-- @format -->
 
-Последние отлаживаемые команды:
+# 2023-10-16
+
+1. Переписал state, инициализацию runner, добавил tracker, не отладил [src\apps\runner\runner.ts](src\apps\runner\runner.ts).
+2. Последние отлаживаемые команды:
 
 ```shell
-ts-node .\src\lib\translator\cl2js.ts
-ts-node .\src\lib\translator\download_lisp_examples.ts
+ ts-node .\src\cli.ts .\src\tests\lisp-like\iteration-and-mapping.ts
 ```
 
-Устаревшая команда (перенесено в `ts-node .\src\lib\translator\download_lisp_examples.ts`):
+Падает в искл.ситуацию при применении `mapc` к элементу за концом списка.
 
-```shell
-npm start dl-3rd
-npm start rebuild-grammar
-```
+Тесты с 2 списками зацикливаются.
